@@ -1,0 +1,104 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "event-connect-angular": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:application",
+          "options": {
+            "outputPath": "dist/event-connect-angular",
+            "index": "src/index.html",
+            "browser": "src/main.ts",
+            "polyfills": ["zone.js"],
+            "tsConfig": "tsconfig.app.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "public"
+              }
+            ],
+            "styles": [
+              "src/assets/fonts/tabler-icons.min.css",
+              "src/assets/fonts/feather.css",
+              "src/assets/fonts/fontawesome.css",
+              "src/assets/fonts/material.css",
+              "src/assets/css/style.css",
+              "src/assets/css/style-preset.css",
+              "src/assets/css/plugins/dataTables.bootstrap5.min.css"
+            ],
+            "scripts": [
+              "src/assets/js/plugins/feather.min.js",
+              "src/assets/js/plugins/popper.min.js",
+              "src/assets/js/plugins/simplebar.min.js",
+              "src/assets/js/plugins/bootstrap.min.js",
+              "src/assets/js/pcoded.js",
+              "node_modules/jquery/dist/jquery.js",
+              "src/assets/js/plugins/jquery.dataTables.min.js",
+              "src/assets/js/plugins/dataTables.bootstrap5.min.js"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kB",
+                  "maximumError": "4kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "event-connect-angular:build:production"
+            },
+            "development": {
+              "buildTarget": "event-connect-angular:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "polyfills": ["zone.js", "zone.js/testing"],
+            "tsConfig": "tsconfig.spec.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "public"
+              }
+            ],
+            "styles": ["src/styles.css"],
+            "scripts": []
+          }
+        }
+      }
+    }
+  }
+}

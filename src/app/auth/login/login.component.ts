@@ -1,0 +1,56 @@
+import { Component } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { LoginService } from '../../services/login.service';
+import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
+import { catchError, of, switchMap, tap } from 'rxjs';
+import { UserService } from '../../services/user.service';
+
+@Component({
+  selector: 'app-login',
+  standalone: true,
+  imports: [ReactiveFormsModule, FormsModule, RouterLink],
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.css',
+})
+export class LoginComponent {
+  error: boolean = false;
+  constructor(
+    private router: Router,
+    private loginService: LoginService,
+    private userService: UserService
+  ) {}
+
+  ngOnInit() {}
+
+  // convenience getter for easy access to form fields
+
+  login(form: NgForm) {
+    this.error = false;
+    this.loginService
+      .login(form.value)
+      .pipe(
+        tap((logRes: any) => {
+          this.loginService.setToken(logRes['access_token']);
+          this.loginService.connectedUser = this.loginService.decodeToken();
+          localStorage.setItem('pageNbr', '1');
+        }),
+        switchMap((res: any) =>
+          this.userService.getUserbyEmail().pipe(
+            catchError((err) => {
+              console.error('Failed to log login', err);
+              return of(null); // Continue even if logging fails
+            })
+          )
+        )
+      )
+      .subscribe({
+        next: (res) => {
+          localStorage.setItem('user', JSON.stringify(res));
+          this.router.navigateByUrl('main');
+        },
+        error: (err) => {
+          this.error = true;
+        },
+      });
+  }
+}

@@ -1,0 +1,86 @@
+.event-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.event-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15) !important;
+}
+
+.event-image-placeholder {
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bg-gradient-primary {
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(
+    135deg,
+    #c1c6e2,
+    /* Blue */ #d436ff,
+    /* Purple */ #42338e,
+    /* Pink */ #ffffff,
+    /* Orange */ #9894fb,
+    /* Green */ #f7dcc5 /* Yellow */
+  );
+  background-size: 300% 300%;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.4s ease-in-out;
+  animation: gradientFlow 10s infinite alternate;
+}
+
+.card {
+  border-radius: 12px;
+}
+
+.badge {
+  font-size: 0.75rem;
+  padding: 0.5em 0.75em;
+}
+
+.bg-purple {
+  background-color: #6f42c1 !important;
+}
+
+.form-control,
+.form-select {
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  padding: 0.75rem 1rem;
+}
+
+.form-control:focus,
+.form-select:focus {
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.1);
+  border-color: #86b7fe;
+}
+
+.input-group-text {
+  border-radius: 8px 0 0 8px;
+  border: 1px solid #e2e8f0;
+  background-color: #f8f9fa;
+}
+
+.btn {
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.progress {
+  border-radius: 10px;
+}
+
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}

@@ -1,0 +1,100 @@
+<div class="auth-main position-relative">
+  <div class="auth-wrapper v3">
+    <div class="auth-form">
+      <div class="auth-header">
+        <a href="#"
+          ><img src="/images/00-logo-tt-banner.png" width="70" alt="img"
+        /></a>
+      </div>
+      <div
+        class="card mb-5 position-absolute top-50 start-50 translate-middle my-3"
+      >
+        <img
+          src="/images/conferencePoster.PNG"
+          alt="logo"
+          style="height: 180px"
+          class="rounded-top-2"
+        />
+        <div class="card-body mb-3">
+          <form #form="ngForm" (ngSubmit)="register(form)">
+            <div class="form-group mb-3">
+              <label class="form-label">First Name</label>
+              <input
+                ngModel
+                type="text"
+                name="firstName"
+                required
+                class="form-control"
+                placeholder="First Name"
+              />
+            </div>
+            <div class="form-group mb-3">
+              <label class="form-label">Last Name</label>
+              <input
+                ngModel
+                type="text"
+                name="lastName"
+                required
+                class="form-control"
+                placeholder="Last Name"
+              />
+            </div>
+            <div class="form-group mb-3">
+              <label class="form-label">Email Address</label>
+              <input
+                ngModel
+                type="email"
+                name="email"
+                required
+                class="form-control"
+                placeholder="Email Address"
+              />
+            </div>
+            <div class="form-group mb-3">
+              <label class="form-label">Password</label>
+              <input
+                ngModel
+                type="password"
+                name="password"
+                required
+                class="form-control"
+                placeholder="Password"
+              />
+            </div>
+            <div class="d-flex mt-1 justify-content-between">
+              <div class="form-check">
+                <input
+                  class="form-check-input input-primary"
+                  type="checkbox"
+                  id="customCheckc1"
+                  checked=""
+                />
+                <label class="form-check-label text-muted" for="customCheckc1"
+                  >Keep me sign in</label
+                >
+              </div>
+              <h5 class="text-secondary f-w-400">
+                <a routerLink="/forgot-password">Forgot Password?</a>
+              </h5>
+            </div>
+            <div class="d-grid mt-4">
+              <button
+                role="banner"
+                type="submit"
+                class="gradient-button"
+                [disabled]="form.invalid"
+              >
+                Register
+              </button>
+            </div>
+            @if (error) {
+            <div class="alert alert-danger mt-3">
+              E-mail ou mot de passe invalide
+            </div>
+            }
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,119 @@
+<nav
+  class="navbar navbar-expand-lg bg-body-tertiary px-2"
+  data-bs-theme="light"
+>
+  <div class="container-fluid">
+    <a routerLink="/"
+      ><img src="/images/00-logo-tt-banner.png" width="50" alt="img"
+    /></a>
+    <button
+      class="navbar-toggler border-0"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarTogglerDemo02"
+      aria-controls="navbarTogglerDemo02"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <i class="ti ti-menu-2"></i>
+    </button>
+    <div class="collapse navbar-collapse ms-3" id="navbarTogglerDemo02">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" routerLink="event-list"
+            >Event List</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="reservation-list">Reservation List</a>
+        </li>
+      </ul>
+      <div class="ms-auto mb-0">
+        <ul class="list-unstyled m-0">
+          <li class="dropdown pc-h-item header-user-profile">
+            <a
+              class="pc-head-link dropdown-toggle arrow-none me-0"
+              data-bs-toggle="dropdown"
+              role="button"
+              aria-haspopup="false"
+              data-bs-auto-close="outside"
+              aria-expanded="false"
+            >
+              <img
+                width="40"
+                src="{{ imageUrl }}"
+                alt="user-image"
+                class="user-avtar rounded-circle me-2"
+                style="border: 2px solid lightgreen !important"
+                onerror="this.src='/images/user/avatar-3.jpg'"
+              />
+              <span>{{ user?.firstName + " " + user?.lastName }}</span>
+            </a>
+            <div
+              class="dropdown-menu dropdown-user-profile dropdown-menu-end pc-h-dropdown"
+            >
+              <div class="dropdown-header">
+                <div class="d-flex mb-1">
+                  <div class="flex-shrink-0">
+                    <img
+                      width="50"
+                      src="{{ imageUrl }}"
+                      alt="user-image"
+                      class="user-avtar wid-35"
+                      onerror="this.src='/images/user/avatar-3.jpg'"
+                    />
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-1">
+                      {{ user?.firstName + " " + user?.lastName }}
+                    </h6>
+                    <span>{{ user?.role }}</span>
+                  </div>
+                </div>
+              </div>
+              <ul
+                class="nav drp-tabs nav-fill nav-tabs"
+                id="mydrpTab"
+                role="tablist"
+              >
+                <li class="nav-item" role="presentation">
+                  <button
+                    class="nav-link active"
+                    id="drp-t1"
+                    data-bs-toggle="tab"
+                    data-bs-target="#drp-tab-1"
+                    type="button"
+                    role="tab"
+                    aria-controls="drp-tab-1"
+                    aria-selected="true"
+                  >
+                    <i class="ti ti-user"></i> Profile
+                  </button>
+                </li>
+              </ul>
+              <div class="tab-content" id="mysrpTabContent">
+                <div
+                  class="tab-pane fade show active"
+                  id="drp-tab-1"
+                  role="tabpanel"
+                  aria-labelledby="drp-t1"
+                  tabindex="0"
+                >
+                  <a routerLink="profile" class="dropdown-item">
+                    <i class="ti ti-edit-circle"></i>
+                    <span>Edit Profile</span>
+                  </a>
+
+                  <a (click)="logout()" class="dropdown-item">
+                    <i class="ti ti-power"></i>
+                    <span>Logout</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,231 @@
+<div class="container-fluid py-4">
+  <!-- Header Section -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card shadow-sm border-0 bg-gradient-primary">
+        <div class="card-body p-5 text-white">
+          <div class="row align-items-center">
+            <div class="col-md-8">
+              <h1 class="display-5 fw-bold mb-3 text-light">
+                <i class="ti ti-list-check me-3"></i>Reservation List
+              </h1>
+              <p class="lead mb-0">
+                Discover and manage your spot at the most exciting events
+                happening near you
+              </p>
+            </div>
+            <div class="col-md-4 text-md-end">
+              <div
+                class="bg-white bg-opacity-25 rounded-pill p-3 d-inline-block"
+              >
+                <i class="ti ti-ticket fs-1"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Search and Filter Section -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <div class="input-group">
+                <span class="input-group-text bg-light border-0">
+                  <i class="ti ti-search text-muted"></i>
+                </span>
+                <input
+                  type="text"
+                  class="form-control border-0 bg-light"
+                  placeholder="Search reservations..."
+                  [(ngModel)]="searchTerm"
+                  (input)="searchReservations()"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <select
+                class="form-select bg-light border-0"
+                [(ngModel)]="selectedStatus"
+                (change)="filterByStatus()"
+              >
+                <option
+                  *ngFor="let status of getReservationStatuses()"
+                  [value]="status"
+                >
+                  {{ status }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Loading State -->
+  <div class="row" *ngIf="isLoading">
+    <div class="col-12">
+      <div class="card shadow-sm border-0">
+        <div class="card-body text-center py-5">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p class="mt-3 text-muted">Loading reservations...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reservations Table -->
+  <div class="row" *ngIf="!isLoading">
+    <div class="col-12">
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead class="bg-light">
+                <tr>
+                  <th class="ps-4">User</th>
+                  <th>Event</th>
+                  <th>Reservation Date</th>
+                  <th>Seats</th>
+                  <th>Status</th>
+                  <th>Type</th>
+                  <th class="text-end pe-4">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="let reservation of filteredReservations"
+                  class="border-bottom"
+                >
+                  <td class="ps-4">
+                    <div class="d-flex align-items-center">
+                      <div class="bg-primary bg-opacity-10 rounded p-3 me-3">
+                        <i class="ti ti-user text-primary fs-5"></i>
+                      </div>
+                      <div>
+                        <h6 class="mb-0 fw-bold">
+                          {{ reservation.user.firstName }}
+                          {{ reservation.user.lastName }}
+                        </h6>
+                        <small class="text-muted">{{
+                          reservation.user.email
+                        }}</small>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <h6 class="mb-0 fw-bold">{{ reservation.event.title }}</h6>
+                    <small class="text-muted">{{
+                      reservation.event.startDateTime | date : "shortDate"
+                    }}</small>
+                  </td>
+                  <td>{{ reservation.reservationDate | date : "medium" }}</td>
+                  <td>
+                    <span class="fw-bold">{{ reservation.numberOfSeats }}</span>
+                  </td>
+                  <td>
+                    <span
+                      class="badge rounded-pill {{
+                        getStatusClass(reservation.status)
+                      }} d-flex align-items-center"
+                    >
+                      <i
+                        class="{{ getStatusIcon(reservation.status) }} me-1"
+                      ></i>
+                      {{ reservation.status }}
+                    </span>
+                  </td>
+                  <td>
+                    <span class="badge bg-light text-dark">
+                      <i
+                        class="ti ti-users me-1"
+                        *ngIf="reservation.isGroupReservation"
+                      ></i>
+                      <i
+                        class="ti ti-user me-1"
+                        *ngIf="!reservation.isGroupReservation"
+                      ></i>
+                      {{
+                        reservation.isGroupReservation ? "Group" : "Individual"
+                      }}
+                    </span>
+                  </td>
+                  <td class="text-end pe-4">
+                    <div class="btn-group" role="group">
+                      @if (reservation?.status!='CANCELLED') {
+                      <button
+                        (click)="selectedReservation = reservation"
+                        data-bs-toggle="modal"
+                        data-bs-target="#cancelModal"
+                        class="btn btn-sm btn-outline-danger"
+                      >
+                        cancel</button
+                      >}
+                    </div>
+                  </td>
+                </tr>
+                <tr *ngIf="filteredReservations.length === 0">
+                  <td colspan="7" class="text-center py-5 text-muted">
+                    <i class="ti ti-list-details fs-1 d-block mb-2"></i>
+                    No reservations found
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- cancel Reservation Modal -->
+<div
+  class="modal fade"
+  id="cancelModal"
+  tabindex="-1"
+  aria-labelledby="cancelModal"
+  aria-hidden="true"
+  tabindex="-1"
+  role="dialog"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title text-light">
+          <i class="ti ti-exclamation-triangle me-2"></i>Cancel Confirm
+        </h5>
+        <button
+          type="button"
+          id="cancel-btn-Modal"
+          class="btn-close btn-close-white"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p>
+          Are you sure you want to cancel the reservation for the event
+          <strong>"{{ selectedReservation?.event?.title }}"</strong>? This
+          action cannot be undone.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="cancelReservation()"
+        >
+          Cancel Reservation
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

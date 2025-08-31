@@ -1,0 +1,498 @@
+<div class="d-flex justify-content-end mb-3" id="main-container">
+  <!--Add User Button trigger modal -->
+
+  @if (authLvl==2) {
+  <button
+    (click)="archived = !archived; loadUsers()"
+    type="button"
+    class="btn me-1"
+    [class]="archived ? 'btn-success' : 'btn-danger'"
+  >
+    <i class="ti ti-archive"></i></button
+  >}
+  <button
+    (click)="onOpenModal(newUser, 'add')"
+    type="button"
+    class="btn btn-success"
+  >
+    <i class="ti ti-user-plus"></i>
+  </button>
+</div>
+<div class="row">
+  <div class="col-12">
+    <div class="card-body table-card bg-white shadow-sm">
+      <div class="table-responsive">
+        <table class="table mb-0">
+          <thead>
+            <tr>
+              <th>UTILISATEUR</th>
+              <th>ROLE</th>
+              <th>STATUE</th>
+              <th>Créé LE</th>
+              @if (authLvl==2) {
+              <th>ACTION</th>
+              }
+            </tr>
+          </thead>
+          <tbody>
+            @for (user of listUsers; track $index) {
+            <tr>
+              <td>
+                <div class="row">
+                  <div class="col-auto pe-0">
+                    @if (user.image) {
+                    <img
+                      [src]="user?.imageUrl"
+                      width="35"
+                      height="35"
+                      class="rounded-circle me-4"
+                      alt="user"
+                    />
+                    }@else{
+                    <img
+                      src="/images/default-profile.jpg"
+                      width="35"
+                      height="35"
+                      class="rounded-circle me-4"
+                      alt="user1"
+                    />
+                    }
+                  </div>
+                  <div class="col">
+                    <h5 class="mb-0">
+                      {{ user?.firstName }} {{ user?.lastName }}
+                    </h5>
+                    <p class="text-muted f-12 mb-0">{{ user?.email }}</p>
+                  </div>
+                </div>
+              </td>
+              <td class="align-middle text-center text-sm">
+                <span
+                  class="badge"
+                  [class]="user?.role == 'ADMIN' ? 'bg-warning' : 'bg-info'"
+                >
+                  {{ user?.role }}
+                </span>
+              </td>
+              <td class="align-middle text-center text-sm">
+                @if (user?.enabled) {
+                <span style="text-transform: uppercase" class="badge bg-success"
+                  >Activé</span
+                >
+                }@else {
+                <span style="text-transform: uppercase" class="badge bg-danger"
+                  >Inactif</span
+                >
+                }
+              </td>
+              <td class="align-middle text-center">
+                <span class="text-secondary text-xs font-weight-bold">{{
+                  user?.createdTimestamp.slice(0, 19)
+                }}</span>
+              </td>
+              @if (authLvl==2) {
+              <td>
+                <div class="btn-group btn-group-sm">
+                  <a
+                    (click)="onOpenModal(user, 'edit')"
+                    href="javascript:;"
+                    class="btn btn-secondary font-weight-bold text-xs"
+                    data-toggle="tooltip"
+                    data-original-title="Edit user"
+                  >
+                    <i class="ti ti-edit"></i> Modifier
+                  </a>
+                  @if (!archived) {
+                  <a
+                    (click)="setArchived(user?.id)"
+                    href="javascript:;"
+                    class="btn btn-danger font-weight-bold text-xs"
+                  >
+                    <i class="ti ti-trash"></i> Archiver </a
+                  >}@else {
+                  <a
+                    (click)="setArchived(user?.id)"
+                    href="javascript:;"
+                    class="btn btn-success font-weight-bold text-xs"
+                  >
+                    <i class="ti ti-box-"></i> Désarchiver
+                  </a>
+                  }
+                </div>
+              </td>
+              }
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="addModal"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <form
+        role="form text-left"
+        #addForm="ngForm"
+        (ngSubmit)="onAddUser(addForm)"
+      >
+        <div class="modal-body">
+          <div class="card-header text-center pt-4">
+            <h5>Ajouter un nouvel utilisateur</h5>
+            <p class="text-danger text-left">Tous les champs sont requis *</p>
+          </div>
+          <div class="card-body">
+            <div class="form-floating mb-3">
+              <input
+                ngModel
+                required
+                type="text"
+                id="firstName"
+                name="firstName"
+                class="form-control"
+                placeholder="Nom"
+                aria-label="nom"
+                aria-describedby="nom-addon"
+              />
+              <label for="firstName">Nom Utilisateur</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input
+                ngModel
+                required
+                type="text"
+                id="lastName"
+                name="lastName"
+                class="form-control"
+                placeholder="Prenom"
+                aria-label="prenom"
+                aria-describedby="prenom-addon"
+              />
+              <label for="lastName">prenom Utilisateur</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input
+                ngModel
+                #addEmail
+                (input)="validateEmail(addEmail.value)"
+                required
+                type="email"
+                class="form-control"
+                name="email"
+                placeholder="Email"
+                id="addEmail"
+                aria-label="Email"
+                aria-describedby="email-addon"
+              />
+              <label for="addEmail">Email</label>
+            </div>
+            @if (!emailError) {
+            <p class="my-3 alert alert-danger text-danger">
+              format d'e-mail invalide.
+            </p>
+            }
+            <div class="form-floating mb-3">
+              <input
+                [type]="inputType"
+                ngModel
+                required
+                name="password"
+                (input)="validateString(toCheckPass.value)"
+                #toCheckPass
+                id="password"
+                class="form-control"
+                placeholder="Mot de passe"
+                aria-label="Mot de passe"
+                aria-describedby="Mot de passe-addon"
+              />
+              <label for="password">Mot de passe</label>
+              <div class="form-check form-switch mt-2">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  (click)="togglePasswordVisibility()"
+                  id="flexSwitchCheckChecked"
+                />
+                @if (inputType=='password') {<i class="bi bi-eye-slash mx-2"></i
+                >}@else {<i class="bi bi-eye mx-2 text-primary"></i>}
+                <label class="form-check-label" for="flexSwitchCheckChecked"
+                  >Show password</label
+                >
+              </div>
+              @if (!passError) {
+              <p class="my-3 alert alert-danger text-danger">
+                Mot de passe fort requis : min 8 caractères, 1 majuscule, 1
+                minuscule, 1 chiffre.
+              </p>
+              }@else {
+              <p class="my-3 alert alert-success text-success">
+                Mot de passe valid
+              </p>
+              }
+            </div>
+            @if (authLvl==2) {
+
+            <div class="form-floating mb-3">
+              <select
+                ngModel
+                required
+                name="role"
+                id="selectRole"
+                class="form-select"
+              >
+                <option value="SUPER_ADMIN">SUPER ADMIN</option>
+                <option value="ADMIN">ADMIN</option>
+                <option value="USER">USER</option>
+              </select>
+              <label for="selectRole"
+                >Veuillez sélectionner le rôle de l'utilisateur</label
+              >
+            </div>
+            }
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            id="addModalCloseBtn"
+            class="btn btn-outline-dark"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button
+            type="submit"
+            [disabled]="addForm.invalid || !passError || !emailError"
+            class="btn btn-outline-success"
+          >
+            Add User
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="updateModal"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <form
+        role="form text-left"
+        #updateForm="ngForm"
+        (ngSubmit)="onUpdateUser(updateForm)"
+      >
+        <div class="modal-body">
+          <div class="card-header text-center pt-4">
+            <h5>Modifier les informations de l'utilisateur</h5>
+            <p class="text-danger text-left">Tous les champs sont requis *</p>
+          </div>
+          <div class="row px-xl-5 px-sm-4 px-3"></div>
+          <div class="card-body">
+            <div class="form-floating mb-3">
+              <input
+                ngModel="{{ editUser?.firstName }}"
+                required
+                type="text"
+                id="firstName1"
+                name="firstName"
+                class="form-control"
+                placeholder="Nom Utilisateur"
+                aria-label="Name"
+                aria-describedby="firstName-addon"
+              />
+              <label for="firstName1">Nom Utilisateur</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input
+                ngModel="{{ editUser?.lastName }}"
+                required
+                type="text"
+                id="lastName1"
+                name="lastName"
+                class="form-control"
+                placeholder="Prenom Utilisateur"
+                aria-label="Name"
+                aria-describedby="lastName-addon"
+              />
+              <label for="lastName1">Prenom Utilisateur</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input
+                ngModel="{{ editUser?.email }}"
+                required
+                type="email"
+                class="form-control"
+                name="email"
+                placeholder="Email"
+                id="addEmail1"
+                aria-label="Email"
+                aria-describedby="email-addon"
+              />
+              <label for="addEmail1">Email</label>
+            </div>
+            @if(!editPassword){
+            <p
+              class="text-center text text-primary cursor-pointer"
+              (click)="editPassword = true; unidinticalPass = false"
+            >
+              Modifier le mot de passe
+            </p>
+            }@else{
+            <div class="form-floating mb-3">
+              <input
+                ngModel
+                (input)="unidinticalPass = pass1.value == pass2.value"
+                required
+                #pass1
+                name="mdp"
+                type="password"
+                id="confirmPass1"
+                class="form-control"
+                placeholder="Password"
+                aria-label="Password"
+                aria-describedby="password-addon"
+              />
+              <label for="confirmPass1">Mot de passe</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input
+                (input)="unidinticalPass = pass1.value == pass2.value"
+                required
+                #pass2
+                name="password"
+                type="password"
+                id="confirmPass2"
+                class="form-control"
+                placeholder="Password"
+                aria-label="Password"
+                aria-describedby="password-addon"
+              />
+              <label for="confirmPass2">Mot de passe</label>
+            </div>
+            @if(!unidinticalPass){
+            <p class="text text-sm text-danger">
+              Mots de passe non identiques !
+            </p>
+            }@else {
+            <p class="text text-sm text-success">
+              Mots de passe valides<i class="bi bi-check2-all"></i>
+            </p>
+            }
+            <p
+              class="text-center text text-primary cursor-pointer"
+              (click)="editPassword = false; unidinticalPass = true"
+            >
+              Annuler la modification du mot de passe
+            </p>
+            }
+
+            <div class="form-floating mb-3">
+              <select
+                [ngModel]="editUser?.role"
+                required
+                name="role"
+                id="selectRole1"
+                class="form-select"
+              >
+                <option value="SUPER_ADMIN">SUPER ADMIN</option>
+                <option value="ADMIN">ADMIN</option>
+                <option value="USER">USER</option>
+              </select>
+              <label for="selectRole1"
+                >Veuillez sélectionner le rôle de l'utilisateur</label
+              >
+            </div>
+
+            <div class="form-check form-switch">
+              <input
+                name="enabled"
+                class="form-check-input"
+                type="checkbox"
+                id="enabled1"
+                #isAdmin
+                [checked]="editUser?.enabled"
+                [ngModel]="editUser?.enabled"
+              />
+              <label class="form-check-label font-weight-bolder" for="enabled1"
+                >Account Status : <small>Disabled / Enabled</small></label
+              >
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            id="updateModalCloseBtn"
+            class="btn btn-outline-dark"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button
+            type="submit"
+            [disabled]="updateForm.invalid || !unidinticalPass"
+            class="btn btn-outline-success"
+          >
+            Update User
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="deleteModal"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="card-body">
+          <h2 class="text text-danger text-center mt-3">
+            Êtes-vous sûr de vouloir supprimer cet utilisateur ? Cette action
+            est irréversible.
+          </h2>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button (click)="onDeleteUser()" class="btn btn-outline-danger">
+          Supprimer
+        </button>
+        <button
+          type="button"
+          id="deleteModalCloseBtn"
+          class="btn btn-outline-success"
+          data-bs-dismiss="modal"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

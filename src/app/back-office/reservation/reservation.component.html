@@ -1,0 +1,444 @@
+<div class="container-fluid py-4">
+  <!-- Header Section -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+          <div class="d-flex justify-content-between align-items-center">
+            <h1 class="h3 mb-0 text-primary">
+              <i class="ti ti-ticket me-2"></i>Reservation Management
+            </h1>
+            <button class="btn btn-primary" (click)="openCreateModal()">
+              <i class="ti ti-plus me-2"></i>Create New Reservation
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search and Filter Section -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <div class="input-group">
+                <span class="input-group-text bg-light border-0">
+                  <i class="ti ti-search text-muted"></i>
+                </span>
+                <input
+                  type="text"
+                  class="form-control border-0 bg-light"
+                  placeholder="Search reservations..."
+                  [(ngModel)]="searchTerm"
+                  (input)="searchReservations()"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <select
+                class="form-select bg-light border-0"
+                [(ngModel)]="selectedStatus"
+                (change)="filterByStatus()"
+              >
+                <option
+                  *ngFor="let status of getReservationStatuses()"
+                  [value]="status"
+                >
+                  {{ status }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Error Message -->
+  <div class="row mb-4" *ngIf="errorMessage">
+    <div class="col-12">
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="ti ti-alert-triangle me-2"></i>
+        {{ errorMessage }}
+        <button
+          type="button"
+          class="btn-close"
+          (click)="errorMessage = ''"
+        ></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div class="row" *ngIf="isLoading">
+    <div class="col-12">
+      <div class="card shadow-sm border-0">
+        <div class="card-body text-center py-5">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p class="mt-3 text-muted">Loading reservations...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reservations Table -->
+  <div class="row" *ngIf="!isLoading">
+    <div class="col-12">
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead class="bg-light">
+                <tr>
+                  <th class="ps-4">User</th>
+                  <th>Event</th>
+                  <th>Reservation Date</th>
+                  <th>Seats</th>
+                  <th>Status</th>
+                  <th>Type</th>
+                  <th class="text-end pe-4">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="let reservation of filteredReservations"
+                  class="border-bottom"
+                >
+                  <td class="ps-4">
+                    <div class="d-flex align-items-center">
+                      <div class="bg-primary bg-opacity-10 rounded p-3 me-3">
+                        <i class="ti ti-user text-primary fs-5"></i>
+                      </div>
+                      <div>
+                        <h6 class="mb-0 fw-bold">
+                          {{ reservation.user.firstName }}
+                          {{ reservation.user.lastName }}
+                        </h6>
+                        <small class="text-muted">{{
+                          reservation.user.email
+                        }}</small>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <h6 class="mb-0 fw-bold">{{ reservation.event.title }}</h6>
+                    <small class="text-muted">{{
+                      reservation.event.startDateTime | date : "shortDate"
+                    }}</small>
+                  </td>
+                  <td>{{ reservation.reservationDate | date : "medium" }}</td>
+                  <td>
+                    <span class="fw-bold">{{ reservation.numberOfSeats }}</span>
+                  </td>
+                  <td>
+                    <span
+                      class="badge rounded-pill {{
+                        getStatusClass(reservation.status)
+                      }} d-flex align-items-center"
+                    >
+                      <i
+                        class="{{ getStatusIcon(reservation.status) }} me-1"
+                      ></i>
+                      {{ reservation.status }}
+                    </span>
+                  </td>
+                  <td>
+                    <span class="badge bg-light text-dark">
+                      <i
+                        class="ti ti-users me-1"
+                        *ngIf="reservation.isGroupReservation"
+                      ></i>
+                      <i
+                        class="ti ti-user me-1"
+                        *ngIf="!reservation.isGroupReservation"
+                      ></i>
+                      {{
+                        reservation.isGroupReservation ? "Group" : "Individual"
+                      }}
+                    </span>
+                  </td>
+                  <td class="text-end pe-4">
+                    <div class="btn-group" role="group">
+                      <button
+                        class="btn btn-sm btn-outline-primary"
+                        (click)="openEditModal(reservation)"
+                      >
+                        <i class="ti ti-edit"></i>
+                      </button>
+                      <button
+                        class="btn btn-sm btn-outline-danger"
+                        (click)="openDeleteModal(reservation)"
+                      >
+                        <i class="ti ti-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <tr *ngIf="filteredReservations.length === 0">
+                  <td colspan="7" class="text-center py-5 text-muted">
+                    <i class="ti ti-list-details fs-1 d-block mb-2"></i>
+                    No reservations found
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Create Reservation Modal -->
+  <div
+    class="modal fade show"
+    [class.d-block]="showCreateModal"
+    tabindex="-1"
+    role="dialog"
+    *ngIf="showCreateModal"
+  >
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title">
+            <i class="ti ti-plus me-2"></i>Create New Reservation
+          </h5>
+          <button
+            type="button"
+            class="btn-close btn-close-white"
+            (click)="closeModals()"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form (ngSubmit)="createReservation()">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">User ID</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  [(ngModel)]="selectedReservation.user.id"
+                  name="userId"
+                  required
+                />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Event ID</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  [(ngModel)]="selectedReservation.event.id"
+                  name="eventId"
+                  required
+                />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Number of Seats</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  [(ngModel)]="selectedReservation.numberOfSeats"
+                  name="numberOfSeats"
+                  required
+                  min="1"
+                />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Reservation Type</label>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="isGroupReservation"
+                    [(ngModel)]="isGroupReservation"
+                    name="isGroupReservation"
+                  />
+                  <label class="form-check-label" for="isGroupReservation">
+                    Group Reservation
+                  </label>
+                </div>
+              </div>
+
+              <!-- Group Reservation Fields -->
+              <div class="col-12" *ngIf="isGroupReservation">
+                <div class="border-top pt-3 mt-3">
+                  <h6 class="mb-3">Group Members</h6>
+                  <div
+                    class="row g-3 mb-3"
+                    *ngFor="let guest of guestNames; let i = index"
+                  >
+                    <div class="col-md-5">
+                      <label class="form-label">Guest Name</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        [(ngModel)]="guestNames[i]"
+                        [name]="'guestName' + i"
+                      />
+                    </div>
+                    <div class="col-md-5">
+                      <label class="form-label">Guest Email</label>
+                      <input
+                        type="email"
+                        class="form-control"
+                        [(ngModel)]="guestEmails[i]"
+                        [name]="'guestEmail' + i"
+                      />
+                    </div>
+                    <div class="col-md-2 d-flex align-items-end">
+                      <button
+                        type="button"
+                        class="btn btn-outline-danger w-100"
+                        (click)="removeGuestField(i)"
+                        *ngIf="guestNames.length > 1"
+                      >
+                        <i class="ti ti-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    class="btn btn-outline-primary"
+                    (click)="addGuestField()"
+                  >
+                    <i class="ti ti-plus me-2"></i>Add Guest
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                (click)="closeModals()"
+              >
+                Cancel
+              </button>
+              <button type="submit" class="btn btn-primary">
+                Create Reservation
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Reservation Modal -->
+  <div
+    class="modal fade show"
+    [class.d-block]="showEditModal"
+    tabindex="-1"
+    role="dialog"
+    *ngIf="showEditModal"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-warning text-dark">
+          <h5 class="modal-title">
+            <i class="ti ti-edit me-2"></i>Update Reservation Status
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            (click)="closeModals()"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form (ngSubmit)="updateReservationStatus()">
+            <div class="mb-3">
+              <label class="form-label">Reservation Status</label>
+              <select
+                class="form-select"
+                [(ngModel)]="selectedReservation.status"
+                name="status"
+                required
+              >
+                <option
+                  *ngFor="let status of getReservationStatuses()"
+                  [value]="status"
+                  [hidden]="status === 'ALL'"
+                >
+                  {{ status }}
+                </option>
+              </select>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                (click)="closeModals()"
+              >
+                Cancel
+              </button>
+              <button type="submit" class="btn btn-warning">
+                Update Status
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div
+    class="modal fade show"
+    [class.d-block]="showDeleteModal"
+    tabindex="-1"
+    role="dialog"
+    *ngIf="showDeleteModal"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-danger text-white">
+          <h5 class="modal-title">
+            <i class="ti ti-alert-triangle me-2"></i>Confirm Deletion
+          </h5>
+          <button
+            type="button"
+            class="btn-close btn-close-white"
+            (click)="closeModals()"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <p>
+            Are you sure you want to delete the reservation for
+            <strong
+              >"{{ selectedReservation.user.firstName }}
+              {{ selectedReservation.user.lastName }}"</strong
+            >
+            for event <strong>"{{ selectedReservation.event.title }}"</strong>?
+            This action cannot be undone.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="closeModals()"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            class="btn btn-danger"
+            (click)="deleteReservation()"
+          >
+            Delete Reservation
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Backdrop -->
+  <div
+    class="modal-backdrop fade show"
+    *ngIf="showCreateModal || showEditModal || showDeleteModal"
+  ></div>
+</div>

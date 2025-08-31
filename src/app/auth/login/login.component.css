@@ -1,0 +1,37 @@
+.gradient-button {
+  padding: 15px 40px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(
+    135deg,
+    #c1c6e2,
+    /* Blue */ #d436ff,
+    /* Purple */ #42338e,
+    /* Pink */ #ffffff,
+    /* Orange */ #9894fb,
+    /* Green */ #f7dcc5 /* Yellow */
+  );
+  background-size: 300% 300%;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.4s ease-in-out;
+  animation: gradientFlow 5s infinite alternate;
+}
+
+.gradient-button:hover {
+  background-position: right center;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  transform: scale(1.05);
+}
+
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}

@@ -1,0 +1,318 @@
+<nav class="pc-sidebar">
+  <div class="navbar-wrapper">
+    <div class="m-header">
+      <a routerLink="/main" class="b-brand text-primary">
+        <!-- ========   Change your logo from here   ============ -->
+        <img
+          src="/images/logo-white.png"
+          width="80"
+          class="img-fluid logo-lg mt-4"
+          alt="logo"
+        />
+      </a>
+    </div>
+    <div class="navbar-content mt-4">
+      <ul class="pc-navbar">
+        <li class="pc-item"></li>
+        @if(authLvl==2){
+        <li class="pc-item pc-caption">
+          <label>Admin Components</label>
+          <i class="ti ti-dashboard"></i>
+        </li>
+        <li class="pc-item">
+          <a routerLink="/main/user-list" class="pc-link">
+            <span class="pc-micon"><i class="ti ti-users"></i></span>
+            <span class="pc-mtext">liste des utilisateurs</span>
+          </a>
+        </li>
+
+        <li class="pc-item">
+          <a routerLink="/main/statistics" class="pc-link">
+            <span class="pc-micon text-warning"
+              ><i class="ti ti-chart-candle"></i
+            ></span>
+            <span class="pc-mtext">Statistics</span>
+          </a>
+        </li>
+        }
+        <li class="pc-item pc-caption">
+          <label>Organizer Components</label>
+          <i class="ti ti-dashboard"></i>
+        </li>
+        <li class="pc-item">
+          <a routerLink="/main/event" class="pc-link">
+            <span class="pc-micon text-success"
+              ><i class="ti ti-calendar"></i
+            ></span>
+            <span class="pc-mtext">Event Management</span>
+          </a>
+        </li>
+
+        <li class="pc-item">
+          <a routerLink="/main/reservation" class="pc-link">
+            <span class="pc-micon text-success"
+              ><i class="ti ti-list-check"></i
+            ></span>
+            <span class="pc-mtext">Reservation List</span>
+          </a>
+        </li>
+        <hr />
+        <li class="pc-item">
+          <a routerLink="/main/events-conflict" class="pc-link">
+            <span class="pc-micon text-danger"
+              ><i class="ti ti-alert-triangle"></i
+            ></span>
+            <span class="pc-mtext text-danger">Event Conflicts</span>
+          </a>
+        </li>
+
+        <li class="pc-item pc-caption">
+          <label>ChatBot et Rapports</label>
+          <i class="ti ti-brand-chrome"></i>
+        </li>
+
+        <li class="pc-item">
+          <a routerLink="chatbot" class="pc-link">
+            <span class="pc-micon"><i class="ti ti-brand-hipchat"></i></span>
+            <span class="pc-mtext">ChatBot</span>
+          </a>
+        </li>
+      </ul>
+      <div class="card text-center">
+        <div class="card-body">
+          <img src="/images/chatbot.png" alt="images" class="img-fluid mb-2" />
+          <h5>Chatbot Ready !</h5>
+          <p>posez n'importe quelle question sur n'importe quel client</p>
+          <a routerLink="chatbot" target="_blank" class="btn btn-primary"
+            >discuter maintenant</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+<!-- [ Sidebar Menu ] end -->
+<!-- [ Header Topbar ] start -->
+<header class="pc-header">
+  <div class="header-wrapper">
+    <!-- [Mobile Media Block] start -->
+    <div class="me-auto pc-mob-drp">
+      <ul class="list-unstyled">
+        <!-- ======= Menu collapse Icon ===== -->
+        <li class="pc-h-item pc-sidebar-collapse">
+          <a
+            style="cursor: pointer"
+            class="pc-head-link ms-0"
+            id="sidebar-hide"
+          >
+            <i class="ti ti-menu-2"></i>
+          </a>
+        </li>
+        <li class="pc-h-item pc-sidebar-popup">
+          <a class="pc-head-link ms-0" id="mobile-collapse">
+            <i class="ti ti-menu-2"></i>
+          </a>
+        </li>
+        <li class="dropdown pc-h-item d-inline-flex d-md-none">
+          <a
+            class="pc-head-link dropdown-toggle arrow-none m-0"
+            data-bs-toggle="dropdown"
+            role="button"
+            aria-haspopup="false"
+            aria-expanded="false"
+          >
+            <i class="ti ti-search"></i>
+          </a>
+          <div class="dropdown-menu pc-h-dropdown drp-search">
+            <form class="px-3">
+              <div class="form-group mb-0 d-flex align-items-center">
+                <i data-feather="search"></i>
+                <input
+                  type="search"
+                  class="form-control border-0 shadow-none"
+                  placeholder="Search here. . ."
+                />
+              </div>
+            </form>
+          </div>
+        </li>
+        <li class="pc-h-item d-none d-md-inline-flex">
+          <form class="header-search">
+            <i data-feather="search" class="icon-search"></i>
+            <input
+              type="search"
+              class="form-control"
+              placeholder="Search here. . ."
+            />
+          </form>
+        </li>
+      </ul>
+    </div>
+    <!-- [Mobile Media Block end] -->
+    <div class="ms-auto">
+      <ul class="list-unstyled">
+        <li class="dropdown pc-h-item header-user-profile">
+          <a
+            class="pc-head-link dropdown-toggle arrow-none me-0"
+            data-bs-toggle="dropdown"
+            role="button"
+            aria-haspopup="false"
+            data-bs-auto-close="outside"
+            aria-expanded="false"
+          >
+            <img
+              src="{{ imageUrl }}"
+              alt="user-image"
+              class="user-avtar"
+              onerror="this.src='/images/user/avatar-3.jpg'"
+            />
+            <span>
+              {{
+                user?.firstName?.toUpperCase() +
+                  " " +
+                  user?.lastName?.toUpperCase()
+              }}</span
+            >
+          </a>
+          <div
+            class="dropdown-menu dropdown-user-profile dropdown-menu-end pc-h-dropdown"
+          >
+            <div class="dropdown-header">
+              <div class="d-flex mb-1">
+                <div class="flex-shrink-0">
+                  <img
+                    src="{{ imageUrl }}"
+                    alt="user-image"
+                    class="user-avtar wid-35"
+                    onerror="this.src='/images/user/avatar-3.jpg'"
+                  />
+                </div>
+                <div class="flex-grow-1 ms-3">
+                  <h6 class="mb-1">
+                    {{ user?.firstName + " " + user?.lastName }}
+                  </h6>
+                  <span> {{ user?.role }}</span>
+                </div>
+                <a (click)="logout()" class="pc-head-link bg-transparent"
+                  ><i class="ti ti-power text-success"></i
+                ></a>
+              </div>
+            </div>
+            <ul
+              class="nav drp-tabs nav-fill nav-tabs"
+              id="mydrpTab"
+              role="tablist"
+            >
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link active"
+                  id="drp-t1"
+                  data-bs-toggle="tab"
+                  data-bs-target="#drp-tab-1"
+                  type="button"
+                  role="tab"
+                  aria-controls="drp-tab-1"
+                  aria-selected="true"
+                >
+                  <i class="ti ti-user"></i> Profile
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link"
+                  id="drp-t2"
+                  data-bs-toggle="tab"
+                  data-bs-target="#drp-tab-2"
+                  type="button"
+                  role="tab"
+                  aria-controls="drp-tab-2"
+                  aria-selected="false"
+                >
+                  <i class="ti ti-settings"></i> Setting
+                </button>
+              </li>
+            </ul>
+            <div class="tab-content" id="mysrpTabContent">
+              <div
+                class="tab-pane fade show active"
+                id="drp-tab-1"
+                role="tabpanel"
+                aria-labelledby="drp-t1"
+                tabindex="0"
+              >
+                <a routerLink="profile" class="dropdown-item">
+                  <i class="ti ti-edit-circle"></i>
+                  <span>Edit Profile</span>
+                </a>
+                <a routerLink="profile" class="dropdown-item">
+                  <i class="ti ti-user"></i>
+                  <span>View Profile</span>
+                </a>
+
+                <a (click)="logout()" class="dropdown-item">
+                  <i class="ti ti-power"></i>
+                  <span>Logout</span>
+                </a>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="drp-tab-2"
+                role="tabpanel"
+                aria-labelledby="drp-t2"
+                tabindex="0"
+              >
+                <a class="dropdown-item">
+                  <i class="ti ti-help"></i>
+                  <span>Support</span>
+                </a>
+                <a class="dropdown-item">
+                  <i class="ti ti-user"></i>
+                  <span>Account Settings</span>
+                </a>
+                <a class="dropdown-item">
+                  <i class="ti ti-lock"></i>
+                  <span>Privacy Center</span>
+                </a>
+                <a class="dropdown-item">
+                  <i class="ti ti-messages"></i>
+                  <span>Feedback</span>
+                </a>
+                <a class="dropdown-item">
+                  <i class="ti ti-list"></i>
+                  <span>History</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<div class="pc-container">
+  <div class="pc-content px-3">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div
+    id="myToast"
+    class="toast align-items-center border-0"
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+  >
+    <div class="d-flex">
+      <div class="toast-body"></div>
+      <button
+        type="button"
+        (click)="closeToast()"
+        class="btn-close btn-close-white me-2 m-auto"
+        data-bs-dismiss="toast"
+        aria-label="Close"
+      ></button>
+    </div>
+  </div>
+</div>

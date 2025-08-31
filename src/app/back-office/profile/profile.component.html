@@ -1,0 +1,319 @@
+<div class="row">
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-body position-relative">
+        <div class="text-center">
+          <div class="chat-avtar d-inline-flex mx-auto position-relative">
+            @if (user?.image) {
+            <img
+              class="rounded-circle img-fluid wid-120"
+              [src]="imageUrl"
+              alt="User image"
+            />
+
+            }@else {
+            <img
+              class="rounded-circle img-fluid wid-120"
+              src="/images/default-profile.jpg"
+              alt="User image"
+            />
+            }
+            <label
+              for="upload"
+              class="position-absolute btn btn-info btn-sm top-0 end-0 rounded-circle"
+            >
+              <i class="ti ti-edit"></i>
+            </label>
+            <input
+              type="file"
+              id="upload"
+              class="account-file-input"
+              hidden
+              (change)="onFileSelected($event)"
+              accept="image/png, image/jpeg"
+            />
+          </div>
+          <h5 class="mt-3">{{ user?.firstName }} {{ user?.lastName }}</h5>
+          <p class="text-muted">{{ user?.role }}</p>
+          <ul class="list-inline ms-auto mb-0">
+            <li class="list-inline-item">
+              <a href="#" class="avtar avtar-xs btn-light-facebook">
+                <i class="ti ti-brand-facebook f-18"></i>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a href="#" class="avtar avtar-xs btn-light-twitter">
+                <i class="ti ti-brand-twitter f-18"></i>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a href="#" class="avtar avtar-xs btn-light-linkedin">
+                <i class="ti ti-brand-linkedin f-18"></i>
+              </a>
+            </li>
+          </ul>
+          <div class="row g-3 my-4">
+            <div class="col-4">
+              <h5 class="mb-0">86</h5>
+              <small class="text-muted">Post</small>
+            </div>
+            <div class="col-4 border border-top-0 border-bottom-0">
+              <h5 class="mb-0">40</h5>
+              <small class="text-muted">Project</small>
+            </div>
+            <div class="col-4">
+              <h5 class="mb-0">4.5K</h5>
+              <small class="text-muted">Members</small>
+            </div>
+          </div>
+        </div>
+        <div
+          class="nav flex-column nav-pills list-group list-group-flush user-sett-tabs"
+          id="user-set-tab"
+          role="tablist"
+          aria-orientation="vertical"
+        >
+          <a
+            class="nav-link list-group-item list-group-item-action active"
+            id="user-tab-1"
+            data-bs-toggle="pill"
+            href="#user-cont-1"
+            role="tab"
+          >
+            <span class="f-w-500"
+              ><i class="ti ti-user m-r-10"></i>Personal Information</span
+            >
+          </a>
+
+          <a
+            class="nav-link list-group-item list-group-item-action"
+            id="user-tab-3"
+            data-bs-toggle="pill"
+            href="#user-cont-3"
+            role="tab"
+          >
+            <span class="f-w-500"
+              ><i class="ti ti-lock m-r-10"></i>Change Password</span
+            >
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-8">
+    <div class="tab-content" id="user-set-tabContent">
+      <div class="tab-pane fade show active" id="user-cont-1" role="tabpanel">
+        <form (ngSubmit)="saveInfos()">
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-12">
+                  <h5>Personal Information</h5>
+                  <hr class="mb-4" />
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label class="form-label">First Name</label>
+                    <input
+                      [(ngModel)]="user.firstName"
+                      type="text"
+                      class="form-control"
+                      name="firstName"
+                    />
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label class="form-label">Last Name</label>
+                    <input
+                      [(ngModel)]="user.lastName"
+                      type="text"
+                      class="form-control"
+                      name="lastName"
+                    />
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input
+                      [(ngModel)]="user.email"
+                      type="email"
+                      class="form-control"
+                      name="email"
+                    />
+                  </div>
+                </div>
+
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label class="form-label">Phone Number</label>
+                    <input
+                      [(ngModel)]="user.tel"
+                      type="text"
+                      class="form-control"
+                      placeholder="Phone Number"
+                      name="tel"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer text-end btn-page">
+              <button
+                role="button"
+                type="button"
+                class="btn btn-outline-secondary"
+                (click)="location.back()"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                role="button"
+                [disabled]="
+                  !(
+                    validations.lowercase ||
+                    validations.matchConfirm ||
+                    validations.minLength ||
+                    validations.number ||
+                    validations.specialChar ||
+                    validations.uppercase
+                  )
+                "
+                class="btn btn-primary"
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="tab-pane fade" id="user-cont-3" role="tabpanel">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12">
+                <h5>Change Password</h5>
+                <hr class="mb-4" />
+              </div>
+
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-label">Old Password</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    [(ngModel)]="oldPassword"
+                    name="oldPassword"
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">New Password</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    [(ngModel)]="newPassword"
+                    (input)="validatePassword()"
+                    name="newPassword"
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Confirm Password</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    [(ngModel)]="confirmPassword"
+                    (input)="validatePassword()"
+                    name="confirmPassword"
+                  />
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <h5>New password must contain:</h5>
+                <ul class="list-group list-group-flush">
+                  <li
+                    class="list-group-item"
+                    [class.text-success]="validations.minLength"
+                  >
+                    <i
+                      class="ti"
+                      [class]="validations.minLength ? 'ti-check' : 'ti-minus'"
+                    ></i>
+                    At least 8 characters
+                  </li>
+                  <li
+                    class="list-group-item"
+                    [class.text-success]="validations.lowercase"
+                  >
+                    <i
+                      class="ti"
+                      [class]="validations.lowercase ? 'ti-check' : 'ti-minus'"
+                    ></i>
+                    At least 1 lowercase letter (a-z)
+                  </li>
+                  <li
+                    class="list-group-item"
+                    [class.text-success]="validations.uppercase"
+                  >
+                    <i
+                      class="ti"
+                      [class]="validations.uppercase ? 'ti-check' : 'ti-minus'"
+                    ></i>
+                    At least 1 uppercase letter (A-Z)
+                  </li>
+                  <li
+                    class="list-group-item"
+                    [class.text-success]="validations.number"
+                  >
+                    <i
+                      class="ti"
+                      [class]="validations.number ? 'ti-check' : 'ti-minus'"
+                    ></i>
+                    At least 1 number (0-9)
+                  </li>
+                  <li
+                    class="list-group-item"
+                    [class.text-success]="validations.specialChar"
+                  >
+                    <i
+                      class="ti"
+                      [class]="
+                        validations.specialChar ? 'ti-check' : 'ti-minus'
+                      "
+                    ></i>
+                    At least 1 special character
+                  </li>
+                  <li
+                    class="list-group-item"
+                    [class.text-success]="validations.matchConfirm"
+                  >
+                    <i
+                      class="ti"
+                      [class]="
+                        validations.matchConfirm ? 'ti-check' : 'ti-minus'
+                      "
+                    ></i>
+                    Confirm password matches
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-footer text-end btn-page">
+            <button class="btn btn-outline-secondary">Cancel</button>
+            <button class="btn btn-primary" (click)="savePassword()">
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

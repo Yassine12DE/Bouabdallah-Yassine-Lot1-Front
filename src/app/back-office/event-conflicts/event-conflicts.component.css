@@ -1,0 +1,123 @@
+.conflict-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.conflict-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+}
+
+.bg-gradient-danger {
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(
+    135deg,
+    #f01b08,
+    /* Blue */ #c45046,
+    /* Purple */ #e7958e,
+    /* Pink */ #40abbe,
+    /* Orange */ #b62f23,
+    /* Green */ #ee3221 /* Yellow */
+  );
+  background-size: 300% 300%;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.4s ease-in-out;
+  animation: gradientFlow 10s infinite alternate;
+}
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+.card {
+  border-radius: 12px;
+}
+
+.badge {
+  font-size: 0.75rem;
+  padding: 0.5em 0.75em;
+}
+
+.btn {
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.form-control,
+.form-select {
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  padding: 0.75rem 1rem;
+}
+
+.form-control:focus,
+.form-select:focus {
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.1);
+  border-color: #86b7fe;
+}
+
+.input-group-text {
+  border-radius: 8px 0 0 8px;
+  border: 1px solid #e2e8f0;
+  background-color: #f8f9fa;
+}
+
+.modal-content {
+  border-radius: 16px;
+  border: none;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  border-bottom: none;
+}
+
+.alert {
+  border-radius: 12px;
+  border: none;
+}
+
+/* Custom severity colors */
+.bg-danger {
+  background-color: #e74a3b !important;
+}
+.bg-warning {
+  background-color: #f6c23e !important;
+}
+.bg-info {
+  background-color: #36b9cc !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .conflict-card .row > [class*="col-"] {
+    margin-bottom: 1rem;
+  }
+
+  .conflict-card .row > [class*="col-"]:last-child {
+    margin-bottom: 0;
+  }
+}
+
+/* Animation for new conflicts */
+@keyframes highlightConflict {
+  0% {
+    background-color: rgba(231, 74, 59, 0.1);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+.conflict-card.new-conflict {
+  animation: highlightConflict 2s ease;
+}

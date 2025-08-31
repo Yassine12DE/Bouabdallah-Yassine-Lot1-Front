@@ -1,0 +1,77 @@
+.card {
+  border-radius: 16px;
+}
+
+.object-fit-cover {
+  object-fit: cover;
+}
+
+.nav-pills .nav-link {
+  border-radius: 8px;
+  color: #6c757d;
+  font-weight: 500;
+}
+
+.nav-pills .nav-link.active {
+  background-color: #4e73df;
+  color: white;
+}
+
+.nav-pills .nav-link:hover:not(.active) {
+  background-color: #f8f9fa;
+}
+
+.rating-stars {
+  display: flex;
+  gap: 4px;
+}
+
+.rating-stars .star {
+  color: #dee2e6;
+  cursor: pointer;
+  font-size: 1.5rem;
+  transition: color 0.2s;
+}
+
+.rating-stars .star.active {
+  color: #ffc107;
+}
+
+.rating-stars .star:hover {
+  color: #ffc107;
+}
+
+.bg-purple {
+  background-color: #6f42c1 !important;
+}
+
+.btn {
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.form-control {
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  padding: 0.75rem 1rem;
+}
+
+.form-control:focus {
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.1);
+  border-color: #86b7fe;
+}
+
+.progress {
+  border-radius: 10px;
+}
+
+.badge {
+  font-size: 0.75rem;
+  padding: 0.5em 0.75em;
+}
+
+/* Ensure images don't break layout */
+img {
+  max-width: 100%;
+  height: auto;
+}
