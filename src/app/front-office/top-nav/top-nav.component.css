@@ -1,1 +1,251 @@
- 
+.modern-navbar {
+  z-index: 99;
+  background: linear-gradient(135deg, #7eb3e4 0%, #e2600a 100%) !important;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  color: white !important;
+  text-decoration: none;
+}
+
+.brand-logo {
+  transition: transform 0.3s ease;
+}
+
+.brand-logo:hover {
+  transform: rotate(10deg);
+}
+
+.brand-text {
+  font-size: 1.4rem;
+  margin-left: 0.5rem;
+  background: linear-gradient(45deg, #fff, #e0e7ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.navbar-nav {
+  gap: 0.5rem;
+}
+
+.nav-link {
+  color: rgba(255, 255, 255, 0.8) !important;
+  padding: 0.75rem 1rem !important;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: white !important;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-1px);
+}
+
+.nav-link.active {
+  background: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.1)
+  );
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.nav-icon {
+  font-size: 1.1rem;
+}
+
+.navbar-toggler {
+  border: none;
+  color: white !important;
+  padding: 0.5rem;
+}
+
+.navbar-toggler:focus {
+  box-shadow: none;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.8)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+.user-dropdown {
+  margin-left: 1rem;
+}
+
+.user-profile-toggle {
+  text-decoration: none;
+  color: white !important;
+  padding: 0.5rem;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.user-profile-toggle:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.user-avatar-wrapper {
+  position: relative;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.user-avatar-lg {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #667eea;
+}
+
+.user-status {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 12px;
+  height: 12px;
+  background: #4ade80;
+  border: 2px solid #667eea;
+  border-radius: 50%;
+}
+
+.user-info {
+  text-align: left;
+}
+
+.user-name {
+  display: block;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.user-role {
+  display: block;
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+.user-name-lg {
+  font-weight: 700;
+  color: #2d3748;
+}
+
+.user-dropdown-menu {
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  min-width: 250px;
+}
+
+.dropdown-header {
+  padding: 1rem;
+  background: linear-gradient(45deg, #f7fafc, #edf2f7);
+  border-radius: 12px;
+  margin-bottom: 0.5rem;
+}
+
+.dropdown-item {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin: 0.15rem 0;
+  color: #4a5568;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.dropdown-item:hover {
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  color: white;
+  transform: translateX(5px);
+}
+
+.dropdown-item i {
+  width: 20px;
+  text-align: center;
+}
+
+.dropdown-divider {
+  margin: 0.5rem 0;
+  opacity: 0.2;
+}
+
+.logout-item {
+  color: #e53e3e !important;
+}
+
+.logout-item:hover {
+  background: #e53e3e !important;
+  color: white !important;
+}
+
+.badge {
+  font-size: 0.7rem;
+  padding: 0.25rem 0.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 991.98px) {
+  .navbar-nav {
+    margin: 1rem 0;
+  }
+
+  .nav-link {
+    padding: 1rem !important;
+    border-radius: 8px;
+    margin: 0.25rem 0;
+  }
+
+  .user-dropdown-menu {
+    margin-top: 0;
+  }
+
+  .user-info {
+    display: none;
+  }
+}
+
+/* Animation for navbar */
+@keyframes slideInDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modern-navbar {
+  animation: slideInDown 0.5s ease;
+}
+
+/* Smooth transitions */
+.navbar * {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}

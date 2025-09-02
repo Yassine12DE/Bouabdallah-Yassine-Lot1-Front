@@ -1,0 +1,95 @@
+/* Custom styles for statistics dashboard */
+.bg-gradient-primary {
+  background: linear-gradient(135deg, #4e73df 0%, #224abe 100%);
+}
+
+.card {
+  border-radius: 12px;
+}
+
+.border-left-primary {
+  border-left: 4px solid #4e73df !important;
+}
+
+.border-left-success {
+  border-left: 4px solid #1cc88a !important;
+}
+
+.border-left-info {
+  border-left: 4px solid #36b9cc !important;
+}
+
+.border-left-warning {
+  border-left: 4px solid #f6c23e !important;
+}
+
+.nav-pills .nav-link {
+  border-radius: 8px;
+  color: #6c757d;
+  font-weight: 500;
+}
+
+.nav-pills .nav-link.active {
+  background-color: #4e73df;
+  color: white;
+}
+
+.nav-pills .nav-link:hover:not(.active) {
+  background-color: #f8f9fa;
+}
+
+.rating-stars {
+  display: flex;
+  gap: 2px;
+}
+
+.rating-stars .star {
+  color: #dee2e6;
+}
+
+.rating-stars .star.active {
+  color: #ffc107;
+}
+
+/* Chart container styling */
+.chart-container {
+  position: relative;
+  height: 400px; /* or whatever fits your design */
+  width: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .card-body {
+    padding: 1rem;
+  }
+
+  .display-5 {
+    font-size: 2rem;
+  }
+}
+
+/* Hover effects for cards */
+.card:hover {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+  transition: box-shadow 0.3s ease;
+}
+
+/* Custom scrollbar for charts */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}

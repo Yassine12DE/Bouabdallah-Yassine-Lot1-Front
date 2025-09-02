@@ -7,6 +7,7 @@ import {
 } from '../interfaces/event-conflict.model';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { LoginService } from '../../services/login.service';
 
 @Component({
   selector: 'app-event-conflicts',
@@ -35,9 +36,14 @@ export class EventConflictsComponent {
   errorMessage: string = '';
   successMessage: string = '';
 
-  constructor(private conflictService: EventConflictService) {}
+  constructor(
+    private conflictService: EventConflictService,
+    private loginService: LoginService
+  ) {}
 
   ngOnInit(): void {
+    // verify only ORGANIZER had access to this component
+    if (this.loginService.getAuthLevel() != 1) this.loginService.verifyAuth();
     this.loadConflicts();
   }
 

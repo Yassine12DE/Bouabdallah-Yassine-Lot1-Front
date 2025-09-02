@@ -308,7 +308,11 @@
 
           <div class="card-footer text-end btn-page">
             <button class="btn btn-outline-secondary">Cancel</button>
-            <button class="btn btn-primary" (click)="savePassword()">
+            <button
+              class="btn btn-primary"
+              (click)="savePassword()"
+              [disabled]="!isPasswordValid"
+            >
               Save
             </button>
           </div>

@@ -1,118 +1,136 @@
-<nav
-  class="navbar navbar-expand-lg bg-body-tertiary px-2"
-  data-bs-theme="light"
->
+<nav class="navbar navbar-expand-lg modern-navbar" data-bs-theme="dark">
   <div class="container-fluid">
-    <a routerLink="/"
-      ><img src="/images/00-logo-tt-banner.png" width="50" alt="img"
-    /></a>
+    <!-- Brand Logo -->
+    <a class="navbar-brand" routerLink="/">
+      <img
+        src="/images/00-logo-tt-banner.png"
+        width="45"
+        alt="Logo"
+        class="brand-logo"
+      />
+      <span class="brand-text">EventConnect</span>
+    </a>
+
+    <!-- Mobile Toggle Button -->
     <button
-      class="navbar-toggler border-0"
+      class="navbar-toggler"
       type="button"
       data-bs-toggle="collapse"
-      data-bs-target="#navbarTogglerDemo02"
-      aria-controls="navbarTogglerDemo02"
+      data-bs-target="#navbarContent"
+      aria-controls="navbarContent"
       aria-expanded="false"
       aria-label="Toggle navigation"
     >
-      <i class="ti ti-menu-2"></i>
+      <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse ms-3" id="navbarTogglerDemo02">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+    <!-- Navigation Content -->
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <!-- Main Navigation Links -->
+      <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <a class="nav-link" aria-current="page" routerLink="event-list"
-            >Event List</a
-          >
+          <a class="nav-link" routerLink="event-list" routerLinkActive="active">
+            <i class="ti ti-calendar-event nav-icon"></i>
+            <span class="nav-text">Events</span>
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="reservation-list">Reservation List</a>
+          <a
+            class="nav-link"
+            routerLink="reservation-list"
+            routerLinkActive="active"
+          >
+            <i class="ti ti-list-check nav-icon"></i>
+            <span class="nav-text">Reservations</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="loyalty-badge"
+            routerLinkActive="active"
+          >
+            <i class="ti ti-award nav-icon"></i>
+            <span class="nav-text">Loyalty</span>
+          </a>
         </li>
       </ul>
-      <div class="ms-auto mb-0">
-        <ul class="list-unstyled m-0">
-          <li class="dropdown pc-h-item header-user-profile">
-            <a
-              class="pc-head-link dropdown-toggle arrow-none me-0"
-              data-bs-toggle="dropdown"
-              role="button"
-              aria-haspopup="false"
-              data-bs-auto-close="outside"
-              aria-expanded="false"
-            >
+
+      <!-- User Profile Section -->
+      <div class="navbar-user-section">
+        <div class="dropdown user-dropdown">
+          <a
+            class="user-profile-toggle dropdown-toggle d-flex align-items-center"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <div class="user-avatar-wrapper">
               <img
-                width="40"
                 src="{{ imageUrl }}"
-                alt="user-image"
-                class="user-avtar rounded-circle me-2"
-                style="border: 2px solid lightgreen !important"
+                alt="User profile"
+                class="user-avatar"
                 onerror="this.src='/images/user/avatar-3.jpg'"
               />
-              <span>{{ user?.firstName + " " + user?.lastName }}</span>
-            </a>
-            <div
-              class="dropdown-menu dropdown-user-profile dropdown-menu-end pc-h-dropdown"
-            >
-              <div class="dropdown-header">
-                <div class="d-flex mb-1">
-                  <div class="flex-shrink-0">
-                    <img
-                      width="50"
-                      src="{{ imageUrl }}"
-                      alt="user-image"
-                      class="user-avtar wid-35"
-                      onerror="this.src='/images/user/avatar-3.jpg'"
-                    />
-                  </div>
-                  <div class="flex-grow-1 ms-3">
-                    <h6 class="mb-1">
-                      {{ user?.firstName + " " + user?.lastName }}
-                    </h6>
-                    <span>{{ user?.role }}</span>
-                  </div>
-                </div>
-              </div>
-              <ul
-                class="nav drp-tabs nav-fill nav-tabs"
-                id="mydrpTab"
-                role="tablist"
-              >
-                <li class="nav-item" role="presentation">
-                  <button
-                    class="nav-link active"
-                    id="drp-t1"
-                    data-bs-toggle="tab"
-                    data-bs-target="#drp-tab-1"
-                    type="button"
-                    role="tab"
-                    aria-controls="drp-tab-1"
-                    aria-selected="true"
-                  >
-                    <i class="ti ti-user"></i> Profile
-                  </button>
-                </li>
-              </ul>
-              <div class="tab-content" id="mysrpTabContent">
-                <div
-                  class="tab-pane fade show active"
-                  id="drp-tab-1"
-                  role="tabpanel"
-                  aria-labelledby="drp-t1"
-                  tabindex="0"
-                >
-                  <a routerLink="profile" class="dropdown-item">
-                    <i class="ti ti-edit-circle"></i>
-                    <span>Edit Profile</span>
-                  </a>
+              <span class="user-status"></span>
+            </div>
+            <div class="user-info ms-2 d-none d-lg-block">
+              <span class="user-name">{{
+                user?.firstName + " " + user?.lastName
+              }}</span>
+              <span class="user-role">{{ user?.role }}</span>
+            </div>
+          </a>
 
-                  <a (click)="logout()" class="dropdown-item">
-                    <i class="ti ti-power"></i>
-                    <span>Logout</span>
-                  </a>
+          <div class="dropdown-menu dropdown-menu-end user-dropdown-menu">
+            <!-- Dropdown Header -->
+            <div class="dropdown-header">
+              <div class="d-flex align-items-center">
+                <div class="user-avatar-wrapper me-3">
+                  <img
+                    src="{{ imageUrl }}"
+                    alt="User profile"
+                    class="user-avatar-lg"
+                    onerror="this.src='/images/user/avatar-3.jpg'"
+                  />
+                </div>
+                <div>
+                  <h6 class="user-name-lg mb-0">
+                    {{ user?.firstName + " " + user?.lastName }}
+                  </h6>
+                  <small class="text-muted">{{ user?.role }}</small>
                 </div>
               </div>
             </div>
-          </li>
-        </ul>
+
+            <div class="dropdown-divider"></div>
+
+            <!-- Dropdown Items -->
+            <a routerLink="profile" class="dropdown-item">
+              <i class="ti ti-user"></i>
+              <span>Profile</span>
+            </a>
+
+            <a routerLink="settings" class="dropdown-item">
+              <i class="ti ti-settings"></i>
+              <span>Settings</span>
+            </a>
+
+            <a class="dropdown-item" href="#">
+              <i class="ti ti-bell"></i>
+              <span>Notifications</span>
+              <span class="badge bg-primary ms-2">3</span>
+            </a>
+
+            <div class="dropdown-divider"></div>
+
+            <a (click)="logout()" class="dropdown-item logout-item">
+              <i class="ti ti-logout"></i>
+              <span>Logout</span>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </div>

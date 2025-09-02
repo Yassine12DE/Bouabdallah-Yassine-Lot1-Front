@@ -8,6 +8,7 @@ import {
 } from '../interfaces/reservation.model';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { LoginService } from '../../services/login.service';
 
 @Component({
   selector: 'app-reservation',
@@ -37,9 +38,14 @@ export class ReservationComponent {
   isLoading: boolean = false;
   errorMessage: string = '';
 
-  constructor(private reservationService: ReservationService) {}
+  constructor(
+    private reservationService: ReservationService,
+    private loginService: LoginService
+  ) {}
 
   ngOnInit(): void {
+    // verify only ORGANIZER had access to this component
+    if (this.loginService.getAuthLevel() != 1) this.loginService.verifyAuth();
     this.loadReservations();
   }
 

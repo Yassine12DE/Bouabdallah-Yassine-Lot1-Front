@@ -24,8 +24,9 @@ export class BackOfficeComponent {
   ) {}
 
   ngOnInit(): void {
-    // this.loginService.verifyAuth();
+    this.loginService.verifyAuth();
     this.authLvl = this.loginService.getAuthLevel();
+
     this.user = JSON.parse(localStorage.getItem('user') || '');
     this.loadImage();
   }

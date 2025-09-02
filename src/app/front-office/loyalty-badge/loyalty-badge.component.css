@@ -1,0 +1,173 @@
+/* Custom colors for loyalty levels */
+.bg-bronze {
+  background: linear-gradient(135deg, #cd7f32 0%, #a56c2a 100%) !important;
+  color: white !important;
+}
+
+.bg-silver {
+  background: linear-gradient(135deg, #c0c0c0 0%, #a8a8a8 100%) !important;
+  color: #333 !important;
+}
+
+.bg-gold {
+  background: linear-gradient(135deg, #ffd700 0%, #d4af37 100%) !important;
+  color: #333 !important;
+}
+
+.bg-platinum {
+  background: linear-gradient(135deg, #e5e4e2 0%, #b6b6b6 100%) !important;
+  color: #333 !important;
+}
+
+.text-bronze {
+  color: #cd7f32 !important;
+}
+.text-silver {
+  color: #c0c0c0 !important;
+}
+.text-gold {
+  color: #ffd700 !important;
+}
+.text-platinum {
+  color: #e5e4e2 !important;
+}
+
+/* Loyalty badge styling */
+.loyalty-badge {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.loyalty-badge-large {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Level cards */
+.loyalty-level-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 16px;
+}
+
+.loyalty-level-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+}
+
+.loyalty-level-card.current-level {
+  border: 2px solid #4e73df !important;
+  box-shadow: 0 0 20px rgba(78, 115, 223, 0.3) !important;
+}
+
+/* Progress bar customization */
+.progress {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  border-radius: 10px;
+  transition: width 0.5s ease;
+}
+
+/* Card styling */
+.card {
+  border-radius: 16px;
+}
+
+.bg-gradient-primary {
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(
+    135deg,
+    #f1721d,
+    /* Blue */ #ffb936,
+    /* Purple */ #90c936,
+    /* Pink */ #82837f,
+    /* Orange */ #94fbd0,
+    /* Green */ #f7dcc5 /* Yellow */
+  );
+  background-size: 300% 300%;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.4s ease-in-out;
+  animation: gradientFlow 10s infinite alternate;
+}
+
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+/* List group customization */
+.list-group-item {
+  background: transparent;
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .loyalty-badge-large {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 1rem;
+  }
+
+  .display-5 {
+    font-size: 2rem;
+  }
+}
+
+/* Animation for progress bar */
+@keyframes progressAnimation {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: attr(style);
+  }
+}
+
+.progress-bar {
+  animation: progressAnimation 1s ease;
+}
+
+/* Hover effects */
+.btn {
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}

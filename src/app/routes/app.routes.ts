@@ -18,6 +18,8 @@ import { FrontOfficeComponent } from '../front-office/front-office.component';
 import { ReservationListComponent } from '../front-office/reservation-list/reservation-list.component';
 import { EventDetailsComponent } from '../front-office/event-details/event-details.component';
 import { EventConflictsComponent } from '../back-office/event-conflicts/event-conflicts.component';
+import { StatisticsComponent } from '../back-office/statistics/statistics.component';
+import { LoyaltyBadgeComponent } from '../front-office/loyalty-badge/loyalty-badge.component';
 
 export const routes: Routes = [
   // default route
@@ -41,15 +43,17 @@ export const routes: Routes = [
     component: BackOfficeComponent,
     children: [
       { path: '', redirectTo: 'event', pathMatch: 'full' },
+      //ADMIN COMPONENTS
       { path: 'user-list', component: UserListComponent },
+      { path: 'statistics', component: StatisticsComponent },
 
-      { path: 'profile', component: ProfileComponent },
-
+      //ORGANIZER COMPONENT
       { path: 'event', component: EventComponent },
-
       { path: 'events-conflict', component: EventConflictsComponent },
-
       { path: 'reservation', component: ReservationComponent },
+
+      //SHARED
+      { path: 'profile', component: ProfileComponent },
     ],
   },
 
@@ -62,6 +66,7 @@ export const routes: Routes = [
       { path: 'event-list', component: EventListComponent },
       { path: 'event-details/:id', component: EventDetailsComponent },
       { path: 'reservation-list', component: ReservationListComponent },
+      { path: 'loyalty-badge', component: LoyaltyBadgeComponent },
     ],
   },
 

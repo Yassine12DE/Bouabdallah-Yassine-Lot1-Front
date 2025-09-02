@@ -34,7 +34,7 @@
             <span class="pc-mtext">Statistics</span>
           </a>
         </li>
-        }
+        } @if (authLvl==1) {
         <li class="pc-item pc-caption">
           <label>Organizer Components</label>
           <i class="ti ti-dashboard"></i>
@@ -65,18 +65,7 @@
             <span class="pc-mtext text-danger">Event Conflicts</span>
           </a>
         </li>
-
-        <li class="pc-item pc-caption">
-          <label>ChatBot et Rapports</label>
-          <i class="ti ti-brand-chrome"></i>
-        </li>
-
-        <li class="pc-item">
-          <a routerLink="chatbot" class="pc-link">
-            <span class="pc-micon"><i class="ti ti-brand-hipchat"></i></span>
-            <span class="pc-mtext">ChatBot</span>
-          </a>
-        </li>
+        }
       </ul>
       <div class="card text-center">
         <div class="card-body">

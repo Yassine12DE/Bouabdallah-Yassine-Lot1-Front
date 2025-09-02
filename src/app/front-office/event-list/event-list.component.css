@@ -34,6 +34,14 @@
   transition: all 0.4s ease-in-out;
   animation: gradientFlow 10s infinite alternate;
 }
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
 
 .card {
   border-radius: 12px;
@@ -76,11 +84,4 @@
   border-radius: 10px;
 }
 
-@keyframes gradientFlow {
-  0% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: 100% 50%;
-  }
-}
+

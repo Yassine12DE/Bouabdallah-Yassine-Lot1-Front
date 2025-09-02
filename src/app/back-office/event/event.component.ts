@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { EventService } from '../../services/event.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { LoginService } from '../../services/login.service';
 
 export enum EventCategory {
   CONFERENCE = 'CONFERENCE',
@@ -37,9 +38,14 @@ export class EventComponent {
   isLoading: boolean = false;
   errorMessage: string = '';
 
-  constructor(private eventService: EventService) {}
+  constructor(
+    private eventService: EventService,
+    private loginService: LoginService
+  ) {}
 
   ngOnInit(): void {
+    // verify only ORGANIZER had access to this component
+    if (this.loginService.getAuthLevel() != 1) this.loginService.verifyAuth();
     this.loadEvents();
   }
 

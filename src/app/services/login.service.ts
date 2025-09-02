@@ -46,13 +46,15 @@ export class LoginService {
   // method to rediract users by role to his default compoenent
   verifyAuth() {
     if (this.verifToken()) {
-      if (this.getAuthLevel() > 0) {
-        this.router.navigateByUrl('main');
+      if (this.getAuthLevel() == 0) {
+        this.router.navigateByUrl('home');
+      } else if (this.getAuthLevel() == 2) {
+        this.router.navigateByUrl('main/statistics');
       } else {
-        this.router.navigateByUrl('main/dashboard-client');
+        this.router.navigateByUrl('main/event');
       }
     } else {
-      this.router.navigateByUrl('login');
+      this.router.navigateByUrl('auth/login');
     }
   }
   ReloadToken(email: any, body: any) {

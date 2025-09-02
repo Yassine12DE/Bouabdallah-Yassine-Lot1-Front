@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { LoginService } from '../../services/login.service';
 import { ToastService } from '../../services/toast.service';
@@ -22,9 +22,9 @@ export class TopNavComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.loginService.verifyAuth();
+    this.loginService.verifyAuth();
     this.authLvl = this.loginService.getAuthLevel();
-    this.user = JSON.parse(localStorage.getItem('user') || '');
+    this.user = JSON?.parse(localStorage?.getItem('user') || '');
     this.loadImage();
   }
 
