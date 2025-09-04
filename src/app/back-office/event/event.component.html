@@ -220,7 +220,7 @@
           ></button>
         </div>
         <div class="modal-body">
-          <form (ngSubmit)="createEvent()">
+          <form (ngSubmit)="createEvent()" #addForm="ngForm">
             <div class="row g-3">
               <div class="col-md-6">
                 <label class="form-label">Event Title</label>
@@ -264,6 +264,12 @@
                   type="datetime-local"
                   class="form-control"
                   [(ngModel)]="selectedEvent.startDateTime"
+                  (change)="
+                    compareDate(
+                      selectedEvent.startDateTime,
+                      selectedEvent.endDateTime
+                    )
+                  "
                   name="startDateTime"
                   required
                 />
@@ -275,9 +281,20 @@
                   class="form-control"
                   [(ngModel)]="selectedEvent.endDateTime"
                   name="endDateTime"
+                  (change)="
+                    compareDate(
+                      selectedEvent.startDateTime,
+                      selectedEvent.endDateTime
+                    )
+                  "
                   required
                 />
               </div>
+
+              <p *ngIf="formErrorMessage" class="alert alert-danger p-2">
+                Please Fix The Date
+              </p>
+
               <div class="col-md-6">
                 <label class="form-label">Location</label>
                 <input
@@ -295,6 +312,7 @@
                   class="form-control"
                   [(ngModel)]="selectedEvent.capacity"
                   name="capacity"
+                  min="1"
                   required
                 />
               </div>
@@ -304,6 +322,7 @@
                   type="number"
                   class="form-control"
                   [(ngModel)]="selectedEvent.availableSeats"
+                  min="1"
                   name="availableSeats"
                   required
                 />
@@ -315,6 +334,7 @@
                   step="0.01"
                   class="form-control"
                   [(ngModel)]="selectedEvent.price"
+                  min="0.01"
                   name="price"
                   required
                 />
@@ -328,7 +348,11 @@
               >
                 Cancel
               </button>
-              <button type="submit" class="btn btn-primary">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                [disabled]="addForm.invalid || formErrorMessage"
+              >
                 Create Event
               </button>
             </div>

@@ -23,6 +23,7 @@ export enum EventCategory {
   styleUrl: './event.component.css',
 })
 export class EventComponent {
+  [x: string]: any;
   events: any[] = [];
   filteredEvents: any[] = [];
   selectedEvent: any;
@@ -37,6 +38,9 @@ export class EventComponent {
   // Loading and error states
   isLoading: boolean = false;
   errorMessage: string = '';
+
+  formErrorMessage: boolean = false;
+  formMessage: string = '';
 
   constructor(
     private eventService: EventService,
@@ -199,5 +203,21 @@ export class EventComponent {
 
   getEventCategories(): string[] {
     return ['ALL', ...Object.values(EventCategory)];
+  }
+
+  compareDate(val: any, val2: any) {
+    this.formErrorMessage = this.getDays(val) > this.getDays(val2);
+
+    console.log(this.getDays(val) > this.getDays(val2));
+    return this.formErrorMessage;
+  }
+
+  getDays(eventDate: string): number {
+    const today = new Date();
+    const eventStart = new Date(eventDate);
+    const diffTime = eventStart.getTime() - today.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    return diffDays;
   }
 }
