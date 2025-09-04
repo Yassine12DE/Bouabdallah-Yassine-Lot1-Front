@@ -119,6 +119,7 @@ export class ReservationListComponent implements OnInit {
       .cancelReservation(this.selectedReservation?.id)
       .subscribe({
         next: () => {
+          this.loadReservations();
           this.toastService.show('edit');
         },
       });

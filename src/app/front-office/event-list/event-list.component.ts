@@ -115,4 +115,13 @@ export class EventListComponent {
     if (diffDays < 30) return `In ${Math.ceil(diffDays / 7)} weeks`;
     return `In ${Math.ceil(diffDays / 30)} months`;
   }
+
+  getDays(eventDate: string): number {
+    const today = new Date();
+    const eventStart = new Date(eventDate);
+    const diffTime = eventStart.getTime() - today.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    return diffDays;
+  }
 }

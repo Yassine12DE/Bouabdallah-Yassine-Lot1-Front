@@ -35,7 +35,8 @@ export class UserListComponent implements OnInit {
 
   ngOnInit(): void {
     // verify only ADMIN had access to this component
-    if (this.loginService.getAuthLevel() < 2) this.loginService.verifyAuth();
+    this.authLvl = this.loginService.getAuthLevel();
+    if (this.authLvl < 2) this.loginService.verifyAuth();
     this.loadUsers();
   }
 
